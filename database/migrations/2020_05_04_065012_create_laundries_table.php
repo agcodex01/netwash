@@ -15,11 +15,12 @@ class CreateLaundriesTable extends Migration
     {
         Schema::create('laundries', function (Blueprint $table) {
             $table->id();
-            $table->string('owner');
-            $table->string('name');
-            $table->string('description');
-            $table->string('location');
+            $table->unsignedBigInteger('partner_id');
+           
             $table->timestamps();
+
+            $table->index('partner_id');
+   
         });
     }
 

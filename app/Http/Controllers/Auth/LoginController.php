@@ -33,22 +33,32 @@ class LoginController extends Controller
 
     public function redirectTo()
     {
-        switch(Auth::user()->role){
-            case 2:
-            $this->redirectTo = '/laundry';
-            return $this->redirectTo;
-                break;       
-            case 1:
-                $this->redirectTo = '/home';
-                return $this->redirectTo;
-                break;
-            default:
-                $this->redirectTo = '/login';
-                return $this->redirectTo;
+        if(Auth::check()){
+            $user = Auth::user();
+            switch($user->role){
+                case 1:
+                    $this->redirectTo = route('admin.index');
+                    return $this->redirectTo ;
+                    break;
+
+                case 2:
+                    $this->redirectTo = route('laundries.dashboard');
+                    return $this->redirectTo;
+                    break;
+                case 3:
+                     $this->redirectTo = route('customers.dashboard');
+                    return $this->redirectTo ;
+                    break;
+                case 4:
+                     $this->redirectTo = route('branch.dashboard',[$user->staff->branch->laundry, $user->staff->branch]);
+                    return $this->redirectTo;
+                    break;
+                default:
+                    $this->redirectTo = '/login';
+                    return $this->redirectTo;
+            }
         }
-         
-        // return $next($request);
-    } 
+    }
 
     /**
      * Create a new controller instance.

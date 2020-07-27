@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Auth;
 
 use App\User;
 use App\Laundry;
+use App\Customer;
+use App\Order;
+use App\Branch;
+use Illuminate\Support\Str;
+use App\Notifications\OrderResponseNotification;
 
 class OrdersController extends Controller
 {
@@ -15,31 +20,28 @@ class OrdersController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $orders = Auth::user()->orders;
-        
-        return view('order.index',compact('orders'));
-    }
+
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Customer $customer, Branch $branch = null)
     {
-        //
-        
-       $laundries =  Laundry::all();
-        
-        
-        return view('order.create',compact('laundries'));
+        $selectedBranch = $branch;
+        if(!$branch== null){
+            $selectedBranch = $branch;
+        }
+
+       $branches =  Branch::all();
+        return view('orders.create',compact('branches','selectedBranch','customer'));
+    }
+
+
+
+    public function details(Order $order){
+        return view('branches.orders.details',compact('order'));
     }
 
     /**
@@ -48,22 +50,35 @@ class OrdersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Customer $customer)
     {
-        //
         $data = $request->validate([
-            'laundry' => 'required | not_in: 0',
+            'branch' => 'required | not_in: 0',
             'service' =>'required | not_in: 0',
+            'transportation' =>'required | not_in: 0',
+            'pickup_location' => '',
+            'dropin_location' => 'required',
             'kilo' => 'required',
             'pickupdate' => 'required',
 
         ]);
 
-        Auth::user()->orders()->create($data);
 
-       
-        return  redirect(route('order.index'));
-      
+
+         $customer->orders()->create([
+
+            'branch_id' => $data['branch'],
+            'service' => $data['service'],
+            'transportation' => $data['transportation'],
+            'pickup_location' => $data['pickup_location'],
+            'dropin_location' =>  $data['dropin_location'],
+            'kilo' => $data['kilo'],
+            'pickupdate' => $data['pickupdate'],
+        ]);
+
+
+        return  redirect()->route('customers.orders',[$customer])->with('success','Your order successfully added!');
+
     }
 
     /**
@@ -83,9 +98,11 @@ class OrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Order $order)
     {
-        //
+        $branches =  Branch::all();
+
+        return view('customer.orders.edit',compact('branches','order'));
     }
 
     /**
@@ -95,9 +112,19 @@ class OrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Order $order)
     {
-        //
+        $order->update([
+            'branch_id' => $request->input('branch'),
+            'service' => $request->input('service'),
+            'transportation' => $request->input('transportation'),
+            'pickup_location' => $request->input('pickup_location'),
+            'dropin_location' => $request->input('dropin_location'),
+            'kilo' => $request->input('kilo'),
+            'pickupdate' => $request->input('pickupdate'),
+        ]);
+
+        return redirect()->route('order.index')->with('success','Your order successfully updated!');
     }
 
     /**
@@ -106,8 +133,102 @@ class OrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Order $order)
     {
-        //
+        $order->delete();
+        return redirect()->route('order.index')->with('success','Your order successfully deleted!');
     }
+
+    public function accepted(Order $order){
+            $order->update([
+                'status' => true
+            ]);
+
+            $order->customer->notify(new OrderResponseNotification($order->branch->laundry->laundryProfile->name,'Your order was accepted'));
+
+            return back();
+    }
+
+    public function declined(Order $order){
+
+        $order->customer->notify(new OrderResponseNotification($order->branch->laundry->laundryProfile->name,'Your order was decline.'));
+        $order->delete();
+
+        return back();
+    }
+    /**
+     * @param \App\Laundry
+     * @param \App\Branch
+     * @return \Illuminate\Http\Response
+     */
+    public function branchOrders(Laundry $laundry, Branch $branch)
+    {
+        $orders = $branch->orders()->latest()->paginate(10);
+
+        return view('branches.orders.index',compact('orders'));
+
+    }
+    /**
+     * @param \App\Laundry
+     * @param \App\Branch
+     * @return \Illuminate\Http\Response
+     */
+    public function waitingList(Laundry $laundry, Branch $branch)
+    {
+        // $orders = $branch->orders()->where('status',1)->get();
+        $orders = $branch->orders->filter(function($order){
+            if($order->status == 1 && $order->washed == 0){
+                return $order;
+            }
+        });//->sortByDesc('updated_at');
+        
+        $ordersWashIn = $branch->orders->filter(function($order){
+            if($order->status == 1 && $order->washed == 1 && $order->done ==0 ){
+                return $order;
+            }
+        });
+
+        // dd($orders);
+        return view('branches.orders.waitingList', compact('orders','ordersWashIn'));
+    }
+    public function washIn(Order $order){
+
+        $order->update([
+            'washed' => 1
+        ]);
+
+        return back()->with('success','success!');
+
+    }
+
+    public function markAsDone(Order $order){
+
+        $order->customer->notify(new OrderResponseNotification($order->branch->laundry->laundryProfile->name,'Your laundry is ready to pick-up'));
+       
+        $order->update([
+            'done' => 1
+        ]);
+        return back()->with('success','success delete!');
+
+    }
+
+    public function statusUpdate( $id, $statusValue)
+    {   
+       
+        $order = Order::findOrFail($id);
+        if($statusValue == 1){
+            $order->update([
+            'washed' => 1
+            ]);
+            return back();
+        }
+        if($statusValue == 2){
+            $order->update([
+            'done' => 1
+            ]);
+        return back();
+        }
+    }
+
+
 }

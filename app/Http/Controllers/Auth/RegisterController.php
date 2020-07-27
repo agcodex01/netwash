@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+
 class RegisterController extends Controller
 {
     /*
@@ -29,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = RouteServiceProvider::DASHBOARD;
 
     /**
      * Create a new controller instance.
@@ -39,6 +40,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        
     }
 
     /**
@@ -66,12 +68,19 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
        
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'username' => $data['username'],
-            'role' => 1,
-            'password' => Hash::make($data['password']),
+        $user =  User::create([
+            'email' => $data['email'] ,
+            'username' => $data['username'] ,
+            'role' => 3,
+            'password' => Hash::make($data['password'])
         ]);
+
+        $user->userProfile()->create([
+            'name' => $data['name']
+        ]);
+
+        $user->customer()->create();
+        $user->customer->image()->create();
+        return $user;
     }
 }

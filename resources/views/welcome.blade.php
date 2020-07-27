@@ -1,100 +1,597 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <title>@yield('title','Netwash')</title>
+        <link rel="icon" href="{{asset('img/logo.png')}}" type="image/icon">
+      
+        <!-- Font Awesome -->
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+          
+          <link href="{{ asset('mdb/css/bootstrap.min.css') }}" rel="stylesheet"> 
+          <link href="{{ asset('mdb/css/mdb.min.css') }}" rel="stylesheet"> 
+        
+        <!-- Your custom styles (optional) -->
+   
+      </head>
 
-        <title>Laravel</title>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
+  
+  <style>
+    html,
+    body,
+    header,
+    .view {
+      height: 100%;
+    }
+    @media (max-width: 740px) {
+      html,
+      body,
+      header,
+      .view {
+        height: 1040px;
+      }
+    }
+    @media (min-width: 800px) and (max-width: 850px) {
+      html,
+      body,
+      header,
+      .view {
+        height: 600px;
+      }
+    }
+  </style>
+<body class="landing-page">
+  
 
-            .full-height {
-                height: 100vh;
-            }
+ 
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
 
-            .position-ref {
-                position: relative;
-            }
+  <!-- Main Navigation -->
+ 
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+    @include('navigation.welcome')
 
-            .content {
-                text-align: center;
-            }
 
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
+        
+    
+    <!--Navbar -->
+    <header>
+    <!-- Intro Section -->
+    <section class="view intro-2">
+      <div class="mask rgba-gradient">
+        <div class="container h-100 d-flex justify-content-center align-items-center">
+          <div class="d-flex align-items-center content-height">
+            <div class="row flex-center pt-5 mt-3">
+              <div class="col-md-6 text-center text-md-left mb-5">
+                <div class="white-text">
+                  <h1 class="h1-responsive font-weight-bold wow fadeInLeft" data-wow-delay="0.3s">Sign up right now!
+                  </h1>
+                  <hr class="hr-light wow fadeInLeft" data-wow-delay="0.3s">
+                  <h5 class="wow fadeInLeft" data-wow-delay="0.3s">
+                    We do our best, to satisfy our customer and give convenient services provided by our partners 
+                    and we assure the great quality of laundry services that our partners give to our customers.
+                  </h5>
+                  <br>
+                  <a class="btn btn-outline-white btn-rounded wow fadeInLeft" data-wow-delay="0.3s">Learn more</a>
                 </div>
-            @endif
+              </div>
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
+              <div class="col-md-6 col-xl-5 offset-xl-1">
+                <!-- Form -->
+                <div class="card wow fadeInRight" data-wow-delay="0.3s">
+                  <div class="card-body">
+                    <!-- Header -->
+                    <div class="text-center">
+                      <h3 class="white-text"><i class="fas fa-user white-text"></i> Register:</h3>
+                      <hr class="hr-light">
+                    </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <!-- Body -->
+                    <div class="md-form">
+                      <i class="fas fa-user prefix white-text"></i>
+                      <input type="text" id="form3" class="form-control">
+                      <label for="form3" class="white-text">Your name</label>
+                    </div>
+                    <div class="md-form">
+                      <i class="fas fa-envelope prefix white-text"></i>
+                      <input type="text" id="form2" class="form-control">
+                      <label for="form2" class="white-text">Your email</label>
+                    </div>
+
+                    <div class="md-form">
+                      <i class="fas fa-lock prefix white-text"></i>
+                      <input type="password" id="form4" class="form-control">
+                      <label for="form4" class="white-text">Your password</label>
+                    </div>
+
+                    <div class="text-center mt-4">
+                      <button class="btn btn-light-blue btn-rounded">Sign up</button>
+                      <hr class="hr-light mb-3 mt-4">
+
+                      <div class="inline-ul text-center d-flex justify-content-center">
+                        <a class="p-2 m-2 fa-lg tw-ic"><i class="fab fa-twitter white-text"></i></a>
+                        <a class="p-2 m-2 fa-lg li-ic"><i class="fab fa-linkedin-in white-text"> </i></a>
+                        <a class="p-2 m-2 fa-lg ins-ic"><i class="fab fa-instagram white-text"> </i></a>
+                      </div>
+                    </div>
+
+                  </div>
                 </div>
+                <!-- /.Form -->
+              </div>
             </div>
+          </div>
         </div>
-    </body>
-</html>
+      </div>
+    </section>
+
+  </header>
+  <!-- Main Navigation -->
+
+  <!-- Main layout -->
+  <main>
+  
+    <div class="container">
+
+      <!-- Section: Features v.4 -->
+      <section class="mt-5 wow fadeIn" data-wow-delay="0.3s">
+
+        <!-- Section heading -->
+        <h1 class="text-center my-5 h1">Why is it so great?</h1>
+        <!-- Section description -->
+        <p class="text-center mb-5 w-responsive mx-auto">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+          Fugit, error amet numquam iure provident voluptate esse quasi, veritatis totam voluptas nostrum quisquam eum
+          porro a pariatur accusamus veniam.</p>
+
+        <!-- Grid row -->
+        <div class="row">
+
+          <!-- Grid column -->
+          <div class="col-md-4">
+
+            <!-- Grid row -->
+            <div class="row mb-2">
+              <div class="col-2">
+                <i class="fas fa-2x fa-flag-checkered indigo-text"></i>
+              </div>
+              <div class="col-10">
+                <h5 class="font-weight-bold">International</h5>
+                <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit maiores
+                  nam, aperiam minima assumenda.</p>
+              </div>
+            </div>
+            <!-- Grid row -->
+
+            <!-- Grid row -->
+            <div class="row mb-2">
+              <div class="col-2">
+                <i class="fas fa-2x fa-flask blue-text"></i>
+              </div>
+              <div class="col-10">
+                <h5 class="font-weight-bold">Experimental</h5>
+                <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit maiores
+                  nam, aperiam minima assumenda.</p>
+              </div>
+            </div>
+            <!-- Grid row -->
+
+            <!-- Grid row -->
+            <div class="row mb-2">
+              <div class="col-2">
+                <i class="fas fa-2x fa-glass-martini cyan-text"></i>
+              </div>
+              <div class="col-10">
+                <h5 class="font-weight-bold">Relaxing</h5>
+                <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit maiores
+                  nam, aperiam minima assumenda.</p>
+              </div>
+            </div>
+            <!-- Grid row -->
+
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-4 mb-2 text-center text-md-left flex-center">
+            <img src="https://mdbootstrap.com/img/Mockups/Transparent/Small/iphone-portfolio1.png" alt="" class="z-depth-0">
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-4">
+
+            <!-- Grid row -->
+            <div class="row mb-2">
+              <div class="col-2">
+                <i class="fas fa-2x fa-heart deep-purple-text"></i>
+              </div>
+              <div class="col-10">
+                <h5 class="font-weight-bold">Beloved</h5>
+                <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit maiores
+                  nam, aperiam minima assumenda.</p>
+              </div>
+            </div>
+            <!-- Grid row -->
+
+            <!-- Grid row -->
+            <div class="row mb-2">
+              <div class="col-2">
+                <i class="fas fa-2x fa-bolt purple-text"></i>
+              </div>
+              <div class="col-10">
+                <h5 class="font-weight-bold">Rapid</h5>
+                <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit maiores
+                  nam, aperiam minima assumenda.</p>
+              </div>
+            </div>
+            <!-- Grid row -->
+
+            <!-- Grid row -->
+            <div class="row mb-2">
+              <div class="col-2">
+                <i class="fas fa-2x fa-magic pink-text"></i>
+              </div>
+              <div class="col-10">
+                <h5 class="font-weight-bold">Magical</h5>
+                <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit maiores
+                  nam, aperiam minima assumenda.</p>
+              </div>
+            </div>
+            <!-- Grid row -->
+
+          </div>
+          <!-- Grid column -->
+
+        </div>
+        <!-- Grid row -->
+
+      </section>
+      <!-- Section: Features v.4 -->
+
+      <hr class="mb-5">
+
+      <!-- Section: Testimonials v.3 -->
+      <section class="section team-section text-center wow fadeIn" data-wow-delay="0.3s">
+
+        <!-- Section heading -->
+        <h1 class="text-center my-5 h1">Team</h1>
+        <!-- Section description -->
+        <p class="text-center mb-5 w-responsive mx-auto">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+          Fugit, error amet numquam iure provident voluptate esse quasi, veritatis totam voluptas nostrum quisquam eum
+          porro a pariatur accusamus veniam.</p>
+
+        <!-- Grid row -->
+        <div class="row text-center">
+
+          <!-- Grid column -->
+          <div class="col-md-4 mb-md-0 mb-4">
+
+            <div class="testimonial">
+              <!-- Avatar -->
+              <div class="avatar mx-auto">
+                <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(1).jpg" class="rounded-circle z-depth-1 img-fluid">
+              </div>
+
+              <!-- Content -->
+              <h4 class="font-weight-bold mt-4 mb-3">Anna Deynah</h4>
+              <h6 class="mb-3 font-weight-bold grey-text">Web Designer</h6>
+              <p><i class="fas fa-quote-left"></i> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod eos id
+                officiis hic tenetur quae quaerat ad velit ab hic tenetur.</p>
+
+              <!-- Review -->
+              <div class="orange-text">
+                <i class="fas fa-star"> </i>
+                <i class="fas fa-star"> </i>
+                <i class="fas fa-star"> </i>
+                <i class="fas fa-star"> </i>
+                <i class="fas fa-star-half-alt"> </i>
+              </div>
+            </div>
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-4 mb-md-0 mb-4">
+            <div class="testimonial">
+              <!-- Avatar -->
+              <div class="avatar mx-auto">
+                <img src="{{asset('img/llorem-logo.png')}}" class="rounded-circle z-depth-1 img-fluid">
+              </div>
+
+              <!-- Content -->
+              <h4 class="font-weight-bold mt-4 mb-3">llorem Zynru</h4>
+              <h6 class="mb-3 font-weight-bold grey-text">Web Developer</h6>
+              <p><i class="fas fa-quote-left"></i> Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
+                suscipit laboriosam, nisi ut aliquid ex ea commodi.</p>
+
+              <!-- Review -->
+              <div class="orange-text">
+                <i class="fas fa-star"> </i>
+                <i class="fas fa-star"> </i>
+                <i class="fas fa-star"> </i>
+                <i class="fas fa-star"> </i>
+                <i class="fas fa-star"> </i>
+              </div>
+            </div>
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-4">
+            <div class="testimonial">
+              <!-- Avatar -->
+              <div class="avatar mx-auto">
+                <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(10).jpg" class="rounded-circle z-depth-1 img-fluid">
+              </div>
+              <!-- Content -->
+              <h4 class="font-weight-bold mt-4 mb-3">Maria Kate</h4>
+              <h6 class="mb-3 font-weight-bold grey-text">Photographer</h6>
+              <p><i class="fas fa-quote-left"></i> At vero eos et accusamus et iusto odio dignissimos ducimus qui
+                blanditiis praesentium voluptatum deleniti atque corrupti.</p>
+
+              <!-- Review -->
+              <div class="orange-text">
+                <i class="fas fa-star"> </i>
+                <i class="fas fa-star"> </i>
+                <i class="fas fa-star"> </i>
+                <i class="fas fa-star"> </i>
+                <i class="far fa-star"> </i>
+              </div>
+
+            </div>
+          </div>
+          <!-- Grid column -->
+
+        </div>
+        <!-- Grid row -->
+
+      </section>
+      <!-- Section: Testimonials v.3 -->
+
+      <hr class="my-5">
+
+      <!-- Section: Pricing v.3 -->
+      <section class="wow fadeIn" data-wow-delay="0.3s">
+
+        <!-- Section heading -->
+        <h1 class="text-center mb-5 h1">Our pricing plans</h1>
+        <!-- Section description -->
+        <p class="text-center mb-5 w-responsive mx-auto">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+          Fugit, error amet numquam iure provident voluptate esse quasi, veritatis totam voluptas nostrum quisquam eum
+          porro a pariatur accusamus veniam.</p>
+
+        <!-- Grid row -->
+        <div class="row">
+
+          <!-- Grid column -->
+          <div class="col-lg-4 col-md-12 mb-lg-0 mb-4">
+            <!-- Card -->
+            <div class="card hoverable">
+
+              <!-- Content -->
+              <div class="text-center">
+                <div class="card-body">
+                  <h5>Basic plan</h5>
+                  <div class="d-flex justify-content-center">
+                    <div class="card-circle d-flex justify-content-center align-items-center">
+                      <i class="fas fa-home light-blue-text"></i>
+                    </div>
+                  </div>
+
+                  <!-- Price -->
+                  <h2 class="font-weight-bold my-3">59$</h2>
+                  <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa pariatur id
+                    nobis
+                    accusamus deleniti cumque hic laborum.</p>
+                  <a class="btn btn-light-blue btn-rounded">Buy now</a>
+                </div>
+              </div>
+
+            </div>
+            <!-- Card -->
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-lg-4 col-md-12 mb-md-0 mb-4">
+            <!-- Card -->
+            <div class="card purple-gradient hoverable">
+
+              <!-- Content -->
+              <div class="text-center white-text">
+                <div class="card-body">
+                  <h5>Premium plan</h5>
+                  <div class="d-flex justify-content-center">
+                    <div class="card-circle d-flex justify-content-center align-items-center">
+                      <i class="fas fa-users white-text"></i>
+                    </div>
+                  </div>
+
+                  <!-- Price -->
+                  <h2 class="font-weight-bold my-3">79$</h2>
+                  <p>Esse corporis saepe laudantium velit adipisci cumque iste ratione facere non
+                    distinctio cupiditate sequi atque.</p>
+                  <a class="btn btn-outline-white btn-rounded">Buy now</a>
+                </div>
+              </div>
+
+            </div>
+            <!-- Card -->
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-lg-4 col-md-12">
+            <!-- Card -->
+            <div class="card hoverable">
+
+              <!-- Content -->
+              <div class="text-center">
+                <div class="card-body">
+                  <h5>Advanced plan</h5>
+                  <div class="d-flex justify-content-center">
+                    <div class="card-circle d-flex justify-content-center align-items-center">
+                      <i class="fas fa-chart-bar light-blue-text"></i>
+                    </div>
+                  </div>
+
+                  <!-- Price -->
+                  <h2 class="font-weight-bold my-3">99$</h2>
+                  <p class="grey-text">At ab ea a molestiae corrupti numquam quo beatae minima ratione magni
+                    accusantium
+                    repellat eveniet quia vitae.</p>
+                  <a class="btn btn-light-blue btn-rounded">Buy now</a>
+                </div>
+              </div>
+
+            </div>
+            <!-- Card -->
+          </div>
+          <!-- Grid column -->
+
+        </div>
+        <!-- Grid row -->
+
+      </section>
+      <!-- Section: Pricing v.3 -->
+
+      <hr class="my-5">
+
+      <!-- Section: Contact v.2 -->
+      <section class="mb-5 wow fadeIn" id="partner" data-wow-delay="0.3s">
+
+        <!-- Section heading -->
+        <h2 class="text-center my-5 h1 display-4">Be one of our Partners</h2>
+        <!-- Section description -->
+        <p class="text-center mb-5 w-responsive mx-auto font-weight-bold h3 ">Contact us to do some business!</p>
+
+        <div class="row">
+
+          <!-- Grid column -->
+          <div class="col-md-8 col-xl-9">
+            <form>
+
+              <!-- Grid row -->
+              <div class="row">
+
+                <!-- Grid column -->
+                <div class="col-md-6">
+                  <div class="md-form mb-0">
+                    <input type="text" id="contact-name" name="name" class="form-control">
+                    <label for="contact-name" class="">Your name</label>
+                  </div>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-6">
+                  <div class="md-form mb-0">
+                    <input type="text" id="contact-email" name="email" class="form-control">
+                    <label for="contact-email" class="">Your email</label>
+                  </div>
+                </div>
+                <!-- Grid column -->
+
+              </div>
+              <!-- Grid row -->
+               <!-- Grid row -->
+               <div class="row">
+                <div class="col-md-6">
+                  <div class="md-form mb-0">
+                    <input type="text" id="contact-laundry-name" name="laundryName" class="form-control">
+                    <label for="contact-laundry-name" class="">Laundry Name</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="md-form mb-0">
+                    <input type="text" id="contact-number" class="form-control">
+                    <label for="contact-number" class="">
+                      Contact Number #
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <!-- Grid row -->
+              
+              <!-- Grid row -->
+              <div class="row">
+
+                <!-- Grid column -->
+                <div class="col-md-12">
+
+                  <div class="md-form mb-0">
+                    <textarea type="text" id="contact-message" name="message" class="md-textarea form-control" rows="3"></textarea>
+                    <label for="contact-message">Your message</label>
+                  </div>
+
+                </div>
+              </div>
+              <!-- Grid row -->
+
+            </form>
+
+            <div class="text-center text-md-left my-4">
+              <a class="btn btn-light-blue btn-rounded">Send</a>
+            </div>
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-4 col-xl-3">
+            <ul class="contact-icons list-unstyled text-center">
+              <li><i class="fas fa-map-marker-alt fa-2x"></i>
+                <p>Nasipit Rd. Talamban, Cebu</p>
+              </li>
+
+              <li><i class="fas fa-phone fa-2x"></i>
+                <p>0946-6640-372</p>
+              </li>
+
+              <li><i class="fas fa-envelope fa-2x"></i>
+                <p>laundry.net@gmail.com</p>
+              </li>
+            </ul>
+          </div>
+          <!-- Grid column -->
+
+        </div>
+
+      </section>
+      <!-- Section: Contact v.2 -->
+
+    </div>
+
+  </main>
+  <!-- Main layout -->
+
+  <footer class="page-footer text-center fixed-bottom indigo ">
+    <!-- Copyright -->
+    <div class="footer-copyright  py-3 text-center">
+      <div class="container-fluid">
+        &copy; 2019 Copyright: <a href="#"> Laundry.Net </a>
+    
+      </div>
+    </div>
+    <!-- Copyright -->
+    
+    </footer>
+
+    <script src="{{ asset('mdb/js/jquery-3.4.1.min.js') }}" ></script>
+    <script src="{{ asset('mdb/js/popper.min.js') }}" ></script>
+    <script src="{{ asset('mdb/js/bootstrap.min.js') }}" ></script>
+    <script src="{{ asset('mdb/js/mdb.min.js') }}" ></script>
+
+<script>
+
+  new WOW().init();
+
+
+  
+</script>
+
+

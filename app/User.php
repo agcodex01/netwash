@@ -6,9 +6,10 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\UserWelcomeMail;
+use Illuminate\Support\Facades\Auth;
+use App\Notifications\InvoicePaid;
 
-class User extends Authenticatable
+class User extends Authenticatable //implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -18,8 +19,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name','username', 'email', 'password','role',
+        'name','email','username', 'role', 'password',
     ];
+
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -38,11 +41,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
     
 
-    public function orders(){
-       return $this->hasMany(Orders::class);
+    public function userProfile(){
+        return $this->hasOne(UserProfile::class);
     }
+
+    public function partner(){
+        return $this->hasOne(Partner::class);
+    }
+    public function customer()
+    {
+        return $this->hasOne(Customer::class);
+    }
+    public function staff()
+    {
+        return $this->hasOne(Staff::class);
+    }
+
+   
     
 }

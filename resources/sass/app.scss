@@ -1,8 +1,46 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// // Variables
+// @import 'variables';
+
+// Fontawesome
+@import url('https://use.fontawesome.com/releases/v5.8.2/css/all.css');
+
+// // Bootstrap
+// @import '~bootstrap/scss/bootstrap';
+
+@import '~mdbootstrap/css/mdb.css';
+@import '~mdbootstrap/css/bootstrap.css';
+@import '~mdbootstrap/scss/mdb';
+
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+    height:8px;
+  
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgb(65, 64, 64);
+    border-radius: 5px;
+    
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(49, 47, 47);
+  }
+

@@ -15,16 +15,21 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('laundry_id');
-            $table->string('laundry')->nullable();
-            $table->string('service')->nullable();
-            $table->integer('kilo')->nullable();
-            $table->date('pickupdate')->nullable();
+            $table->unsignedBigInteger('customer_id');
+            $table->unsignedBigInteger('branch_id');
+            $table->string('service');
+            $table->string('transportation');
+            $table->string('pickup_location')->nullable();   
+            $table->string('dropin_location');
+            $table->integer('kilo');
+            $table->date('pickupdate');
+            $table->integer('status')->default(false);
+            $table->integer('washed')->default(false);
+            $table->integer('done')->default(false);
             $table->timestamps();
 
-            $table->index('user_id');
-            $table->index('laundry_id');
+            $table->index('customer_id');
+            $table->index('branch_id');
         });
     }
 
